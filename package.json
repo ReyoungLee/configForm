@@ -1,0 +1,30 @@
+{
+  "name": "config-form",
+  "version": "1.0.0",
+  "description": "form for simple object config",
+  "main": "src/index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReyoungLee/configForm.git"
+  },
+  "author": "reyounglee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReyoungLee/configForm/issues"
+  },
+  "homepage": "https://github.com/ReyoungLee/configForm#readme",
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "antd": "^5.1.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lodash-es": "^4.17.21",
+    "dayjs": "^1.11.7"
+  },
+  "devDependencies": {
+    "rc-field-form": "^1.27.4"
+  }
+}
