@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/indent */
-import { RadioProps, TooltipProps } from 'antd'
+import { FormListFieldData, RadioProps, TooltipProps } from 'antd'
 import { Rule } from 'antd/lib/form'
 import { Store as FormValues } from 'rc-field-form/es/interface'
 import { CSSProperties } from 'react'
@@ -107,6 +107,10 @@ export interface IFieldConfig {
 	 */
 	max?: number
 	/**
+	 * available for type `list` only
+	 */
+	listFieldProps?: FormListFieldData
+	/**
 	 * 仅在mode为static时生效
 	 * 渲染field到指定容器
 	 * container为指定的容器id
@@ -152,6 +156,8 @@ export interface IBtnConfig {
 export interface IFormConfig {
 	[key: string]: any;
 	mode?: 'grid' | 'static';
+	/** @private */
+	nested?: boolean
 	ref?: React.RefObject<any> | React.ForwardedRef<any>;
 	onFinish?: (values: FormValues) => void;
 	onFinishFailed?: (values: FormValues) => void;

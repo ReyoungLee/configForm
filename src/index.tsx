@@ -241,6 +241,7 @@ class Form extends React.Component<IFormConfig> {
 					itemConfig={field.itemConfig}
 					min={field.min}
 					max={field.max}
+					name={field.key}
 				/>
 			)
 		case 'input':
@@ -279,8 +280,14 @@ class Form extends React.Component<IFormConfig> {
 			}
 			break
 		case 'list':
-			Display = ({ value = [] }) => {
-				return <List showMode value={value} itemConfig={field.itemConfig} />
+			Display = () => {
+				return (
+					<List
+						showMode
+						itemConfig={field.itemConfig}
+						name={field.key}
+					/>
+				)
 			}
 			break
 		default:
@@ -326,6 +333,7 @@ class Form extends React.Component<IFormConfig> {
 			className = '',
 			initialValues,
 			maxWidth,
+			nested,
 			...others
 		} = this.props
 		/** static布局 且表单项仅有一行 */
@@ -358,6 +366,7 @@ class Form extends React.Component<IFormConfig> {
 					{...field.toolTip}
 				>
 					<AForm.Item
+						{...field.listFieldProps}
 						style={field.style}
 						className={`${field.extraInline ? 'inline-extra' : ''} ${field.className}`}
 						label={field.label || (labelSpan != 0 && ' ')}
@@ -375,7 +384,6 @@ class Form extends React.Component<IFormConfig> {
 			)
 
 			const containerElement = document.querySelector(`#${field.container}`)
-
 			return (
 				mode === 'grid' ?
 					<Col
@@ -386,6 +394,7 @@ class Form extends React.Component<IFormConfig> {
 					>
 						<Tooltip title='' {...field.toolTip}>
 							<AForm.Item
+								{...field.listFieldProps}
 								className={field.extraInline ? 'inline-extra' : ''}
 								label={field.label || (labelSpan != 0 && ' ')}
 								name={field.key || field.label}
@@ -416,7 +425,43 @@ class Form extends React.Component<IFormConfig> {
 			Object.entries(filterFormDataType(fields, fieldsController, true)).map(
 				([name, value]) => ({ name, value })
 			)
-		return (
+		const contents = <>
+			{mode === 'grid' || isStaticFieldsInOneRow ?
+				<Row>
+					{renderFields(fields as IFieldConfig[])}
+					{((btn.submit || btn.reset) && !btn.newLine) &&
+						<Col
+							span={options.wrapperSpan}
+							className={btnClassName}
+						>
+							<AForm.Item>{this.renderBtn(btn)}</AForm.Item>
+						</Col>
+					}
+				</Row> :
+				fields.map((fieldOrFields, index) => {
+					return (
+						<Row key={String(index)}>
+							{renderFields(
+								Array.isArray(fieldOrFields)
+									? fieldOrFields
+									: [fieldOrFields]
+							)}
+						</Row>
+					)
+				})
+			}
+			{btn.newLine &&
+				<Row>
+					<Col
+						span={TOTAL_SPAN}
+						className={btnClassName}
+					>
+						{this.renderBtn(btn)}
+					</Col>
+				</Row>
+			}
+		</>
+		return (nested ? contents :
 			<AForm
 				className={`c-universal-form ${className}`}
 				initialValues={initialValues && filterFormDataType(fields, initialValues, true)}
@@ -428,40 +473,7 @@ class Form extends React.Component<IFormConfig> {
 				onValuesChange={this.onValuesChange}
 				fields={convertedFieldsValue}
 			>
-				{mode === 'grid' || isStaticFieldsInOneRow ?
-					<Row>
-						{renderFields(fields as IFieldConfig[])}
-						{((btn.submit || btn.reset) && !btn.newLine) &&
-								<Col
-									span={options.wrapperSpan}
-									className={btnClassName}
-								>
-									<AForm.Item>{this.renderBtn(btn)}</AForm.Item>
-								</Col>
-						}
-					</Row> :
-					fields.map((fieldOrFields, index) => {
-						return (
-							<Row key={String(index)}>
-								{renderFields(
-									Array.isArray(fieldOrFields)
-										? fieldOrFields
-										: [fieldOrFields]
-								)}
-							</Row>
-						)
-					})
-				}
-				{btn.newLine &&
-					<Row>
-						<Col
-							span={TOTAL_SPAN}
-							className={btnClassName}
-						>
-							{this.renderBtn(btn)}
-						</Col>
-					</Row>
-				}
+				{contents}
 			</AForm>
 		)
 	}
