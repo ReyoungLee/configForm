@@ -8,7 +8,7 @@ import React from 'react'
 import Form, { IFieldConfig } from './index'
 
 interface IProps {
-	itemConfig?: IFieldConfig[]
+	fields?: IFieldConfig[]
 	min?: number
 	max?: number
 	showMode?: boolean
@@ -18,7 +18,7 @@ interface IProps {
 const List: React.FC<IProps> = (props) => {
 
 	const {
-		itemConfig,
+		fields: itemConfig,
 		min = 1,
 		max = 4,
 		showMode,

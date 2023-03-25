@@ -238,7 +238,7 @@ class Form extends React.Component<IFormConfig> {
 			return (
 				<List
 					{...commonProps}
-					itemConfig={field.itemConfig}
+					fields={field.fields}
 					min={field.min}
 					max={field.max}
 					name={field.key}
@@ -284,7 +284,7 @@ class Form extends React.Component<IFormConfig> {
 				return (
 					<List
 						showMode
-						itemConfig={field.itemConfig}
+						fields={field.fields}
 						name={field.key}
 					/>
 				)

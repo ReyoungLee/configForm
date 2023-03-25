@@ -97,7 +97,7 @@ export interface IFieldConfig {
 	/**
 	 * available for type `list` only
 	 */
-	itemConfig?: IFieldConfig[]
+	fields?: IFieldConfig[]
 	/**
 	 * available for type `list` only
 	 */
