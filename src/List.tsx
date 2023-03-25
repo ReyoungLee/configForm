@@ -13,6 +13,7 @@ interface IProps {
 	max?: number
 	showMode?: boolean
 	name: string | string[]
+	listItemClassName?: string
 }
 
 const List: React.FC<IProps> = (props) => {
@@ -23,6 +24,7 @@ const List: React.FC<IProps> = (props) => {
 		max = 4,
 		showMode,
 		name,
+		listItemClassName = '',
 	} = props
 
 	if (!itemConfig) {
@@ -33,10 +35,9 @@ const List: React.FC<IProps> = (props) => {
 			{(fields, { add, remove}) => (
 				<>
 					{fields.map((field) => (
-						<div className='flex flxex-1 items-start bg-slate-50 pt-3 mb-3 pr-1 rounded-md' key={field.key}>
+						<div className={`formlist-item ${listItemClassName}`} key={field.key}>
 							<Form
 								nested
-								// className='flex-1'
 								fields={itemConfig.map(config => ({
 									...config,
 									key: [`${field.key}`, ...(Array.isArray(config.key) ? config.key : [config.key])],
@@ -46,7 +47,7 @@ const List: React.FC<IProps> = (props) => {
 							/>
 							{!showMode && <DeleteOutlined
 								onClick={() => fields.length > min && remove(field.name)}
-								className={`text-lg w-6 h-8 ml-4 ${fields.length == min && 'cursor-not-allowed text-gray-300'}`}
+								className={`delete-btn ${fields.length == min && ' disabled'}`}
 							/>}
 						</div>
 					))}
@@ -55,9 +56,9 @@ const List: React.FC<IProps> = (props) => {
 						disabled={fields.length >= max}
 						block
 						type='dashed'
-						className='flex items-center justify-center'
+						className='formlist-add-btn'
 					>
-						<PlusCircleOutlined className='text-lg leading-none text-gray-500' />
+						<PlusCircleOutlined />
 					</Button>}
 				</>
 			)}

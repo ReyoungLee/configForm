@@ -35,6 +35,33 @@
 			width: 100%;
 		}
 	}
+	.formlist-item {
+		display: flex;
+		align-items: flex-start;
+		.delete-btn {
+			font-size: 18px;
+			width: 24px;
+			height: 32px;
+			margin-left: 16px;
+			&.disabled {
+				cursor: not-allowed;
+				color: #ccc
+			}
+		}
+	}
+	.formlist-add-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.anticon {
+			transition: .3s;
+			font-size: 16px;
+			color: #666;
+		}
+		&:hover .anticon {
+			color: #1677ff;
+		}
+	}
 }
 
 .ant-picker-time-panel-column {
