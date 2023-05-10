@@ -146,14 +146,11 @@ class Form extends React.Component<IFormConfig> {
 			return (
 				<Tabs
 					{...commonProps}
-				>
-					{dataSource.map(({ label, value }: IDataSourceObj) => (
-						<Tabs.TabPane
-							tab={label}
-							key={value}
-						/>
-					))}
-				</Tabs>
+					items={dataSource.map(({ label, value }: IDataSourceObj) => ({
+						key: `${value}`,
+						label,
+					}))}
+				/>
 			)
 		case 'select':
 			return (
